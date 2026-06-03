@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
-
+        
         :root {
             --bg-dim: #0f1115;
             --card-bg: #1a1d23;
-            --accent: #ff9f1c;
+            --accent: #ff9f1c; /* Saffron/Orange accent for Indian feel */
         }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            scroll-behavior: smooth;
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            scroll-behavior: smooth; 
             background-color: var(--bg-dim);
             color: #e2e8f0;
         }
@@ -62,140 +62,116 @@
             animation: marquee 20s linear infinite;
         }
 
-        /* Share Modal Styles */
-        #share-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        #share-modal.open {
-            display: flex;
-        }
+        /* Share modal custom styles (theme-matched) */
         #share-modal-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.7rem;
+            border-radius: 9999px;
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(255, 159, 28, 0.25);
+        }
+
+        .share-btn .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .share-url-box {
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background-color: rgba(15, 23, 42, 0.9);
+            border-radius: 9999px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: 0.75rem;
+        }
+
+        .share-url-box .url-text {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #cbd5f5;
+        }
+
+        .share-url-copy-btn {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            background-color: var(--accent);
+            color: #0f1115;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+
+        .share-close-btn {
             position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(4px);
+            right: 10px;
+            top: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(15, 23, 42, 0.9);
+            color: #e2e8f0;
+            cursor: pointer;
         }
-        #share-modal-panel {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 480px;
-            background: #1a1d23;
-            border: 1px solid rgba(255, 159, 28, 0.18);
-            border-bottom: none;
-            border-radius: 24px 24px 0 0;
-            padding: 28px 24px 40px;
-            transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-        }
-        #share-modal.open #share-modal-panel {
-            transform: translateY(0);
-        }
+
         .share-drag-handle {
             width: 40px;
             height: 4px;
-            background: rgba(255, 159, 28, 0.3);
-            border-radius: 2px;
-            margin: 0 auto 22px;
+            border-radius: 9999px;
+            background-color: rgba(148, 163, 184, 0.4);
+            margin: 0 auto 0.75rem auto;
         }
-        .share-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 20px;
+
+        @media (max-width: 640px) {
+            #share-modal-panel {
+                width: 100%;
+                max-width: 480px;
+                border-radius: 1.5rem 1.5rem 0 0;
+                margin: auto;
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
-        .share-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 16px 8px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 159, 28, 0.12);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #e2e8f0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .share-btn:hover {
-            background: rgba(255, 159, 28, 0.1);
-            border-color: rgba(255, 159, 28, 0.4);
-            transform: translateY(-2px);
-        }
-        .share-btn:active {
-            transform: translateY(0);
-        }
-        .share-btn .icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .share-btn span {
-            font-size: 11px;
-            font-weight: 600;
-            text-align: center;
-            color: #9ca3af;
-        }
-        .share-url-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 159, 28, 0.2);
-            border-radius: 14px;
-            padding: 12px 14px;
-            margin-top: 20px;
-        }
-        .share-url-box .url-text {
-            flex: 1;
-            font-size: 11px;
-            color: #6b7280;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .share-url-copy-btn {
-            flex-shrink: 0;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 9px;
-            padding: 7px 14px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: opacity 0.2s;
-        }
-        .share-url-copy-btn:hover { opacity: 0.88; }
-        .share-close-btn {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            background: rgba(255,255,255,0.06);
-            border: none;
-            color: #9ca3af;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-        .share-close-btn:hover { background: rgba(255,255,255,0.12); }
     </style>
 </head>
 <body class="pb-28">
@@ -203,7 +179,7 @@
     <!-- Announcement Bar -->
     <div class="bg-orange-500 text-white py-1.5 overflow-hidden sticky top-0 z-50">
         <div class="animate-marquee font-bold text-xs uppercase tracking-widest">
-            🍛 Special Sunday Virundhu available now • Authentic Filter Coffee freshly brewed every 15 minutes • New Seasonal Mango Kesari added to Desserts •
+            🍛 Special Sunday Virundhu available now • Authentic Filter Coffee freshly brewed every 15 minutes • New Seasonal Mango Kesari added to Desserts • 
         </div>
     </div>
 
@@ -225,53 +201,64 @@
     </nav>
 
     <main class="max-w-3xl mx-auto p-4 space-y-16">
+
+        <!-- Morning Tiffin (Grid) -->
         <section id="tiffin">
             <h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Morning Tiffin</h2>
-            <div class="menu-grid" id="tiffin-container"></div>
+            <div class="menu-grid" id="tiffin-container">
+                <!-- Javascript will inject 10 items here -->
+            </div>
         </section>
+
+        <!-- Brunch (List Style) -->
         <section id="brunch">
             <h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Brunch Specials</h2>
             <div class="space-y-4" id="brunch-container"></div>
         </section>
+
+        <!-- Lunch (Full Card Style) -->
         <section id="lunch">
             <h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Lunch (Saappadu)</h2>
             <div class="space-y-6" id="lunch-container"></div>
         </section>
+
+        <!-- Snacks & Dinner & Desserts & Drinks -->
         <section id="snacks"><h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Evening Snacks</h2><div class="menu-grid" id="snacks-container"></div></section>
         <section id="dinner"><h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Dinner Items</h2><div class="space-y-4" id="dinner-container"></div></section>
         <section id="desserts"><h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Desserts</h2><div class="menu-grid" id="desserts-container"></div></section>
         <section id="drinks"><h2 class="text-xl font-bold mb-6 text-orange-500 border-l-4 border-orange-500 pl-3">Beverages</h2><div class="space-y-4" id="drinks-container"></div></section>
+
     </main>
 
     <!-- Navigation & Feedback -->
     <div class="fixed bottom-6 left-0 right-0 px-6 z-50">
         <div class="max-w-md mx-auto flex gap-3">
-            <button onclick="requestAssistance()" class="h-14 w-14 bg-[#1a1d23] border border-white/10 rounded-2xl shadow-2xl flex items-center justify-center text-xl text-orange-500 hover:bg-[#232830] transition-colors">
+            <button onclick="requestAssistance()" class="h-14 w-14 bg-[#1a1d23] border border-white/10 rounded-2xl shadow-2xl flex items-center justify-center text-xl text-orange-500">
                 <i class="fas fa-bell"></i>
             </button>
-            <button onclick="shareMenu()" class="h-14 flex-1 bg-orange-500 text-white font-black rounded-2xl shadow-2xl flex items-center justify-center gap-2 uppercase tracking-widest text-sm hover:bg-orange-600 transition-colors">
+            <!-- UPDATED: added onclick to trigger share -->
+            <button onclick="shareMenu()" class="h-14 flex-1 bg-orange-500 text-white font-black rounded-2xl shadow-2xl flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
                 Share Menu <i class="fas fa-share-nodes ml-1"></i>
             </button>
         </div>
     </div>
 
-    <!-- Alert Toast -->
-    <div id="alert" class="fixed top-[-100px] left-1/2 -translate-x-1/2 bg-white text-black px-8 py-4 rounded-3xl shadow-2xl transition-all duration-500 z-[110] font-bold text-sm whitespace-nowrap pointer-events-none">
+    <div id="alert" class="fixed top-[-100px] left-1/2 -translate-x-1/2 bg-white text-black px-8 py-4 rounded-3xl shadow-2xl transition-all duration-500 z-[60] font-bold text-sm">
         <span id="alert-msg"></span>
     </div>
 
-    <!-- Share Modal -->
-    <div id="share-modal" role="dialog" aria-modal="true" aria-label="Share menu">
-        <div id="share-modal-overlay" onclick="closeShareModal()"></div>
-        <div id="share-modal-panel">
+    <!-- NEW: Share Modal -->
+    <div id="share-modal" class="fixed inset-0 z-[70] hidden items-center justify-center">
+        <div id="share-modal-overlay" class="absolute inset-0" onclick="closeShareModal()"></div>
+        <div id="share-modal-panel" class="relative bg-[#111827] border border-white/10 rounded-2xl p-4 sm:p-5 max-w-md w-[92%] sm:w-full shadow-2xl mx-auto">
             <button class="share-close-btn" onclick="closeShareModal()" aria-label="Close share menu">
-                <i class="fas fa-xmark"></i>
+                <i class="fas fa-xmark text-xs"></i>
             </button>
             <div class="share-drag-handle"></div>
             <h3 class="text-white font-bold text-base">Share this Menu</h3>
-            <p class="text-gray-500 text-xs mt-1">Let your friends discover authentic Tamil flavours</p>
+            <p class="text-gray-400 text-xs mt-1">Let your friends discover authentic Tamil flavours</p>
 
-            <div class="share-grid">
+            <div class="mt-3 share-grid">
                 <button class="share-btn" onclick="shareVia('whatsapp')" title="Share on WhatsApp">
                     <div class="icon" style="background:#1b5e20; color:#4caf50;">
                         <i class="fab fa-whatsapp"></i>
@@ -319,9 +306,6 @@
     </div>
 
     <script>
-        const SHARE_URL = 'https://nikispace.github.io/QR-driven-menu-display/';
-        const SHARE_TEXT = "Check out Indian Kitchen's authentic Tamil menu!";
-
         const menuData = {
             tiffin: [
                 { name: "Poo Idli (2 Nos)", price: "₹40", prep: "5m", desc: "Steamed rice cakes with 3 chutneys & sambar.", veg: true },
@@ -410,11 +394,12 @@
         };
 
         function generateMenu() {
+            // Tiffin Grid
             const tiffinHTML = menuData.tiffin.map(item => `
                 <div class="smart-highlight bg-[#1a1d23] rounded-2xl p-4 flex flex-col">
                     <div class="flex justify-between items-start gap-1">
                         <h3 class="font-bold text-sm text-white">${item.name}</h3>
-                        <span class="w-2 h-2 rounded-full ${item.veg ? 'bg-green-500' : 'bg-red-500'} mt-1" aria-label="${item.veg ? 'Vegetarian' : 'Non-vegetarian'}"></span>
+                        <span class="w-2 h-2 rounded-full ${item.veg ? 'bg-green-500' : 'bg-red-500'} mt-1"></span>
                     </div>
                     <p class="text-[10px] text-gray-500 mt-2 flex-1">${item.desc}</p>
                     <div class="mt-4 flex justify-between items-center">
@@ -425,6 +410,7 @@
             `).join('');
             document.getElementById('tiffin-container').innerHTML = tiffinHTML;
 
+            // Lunch List
             const lunchHTML = menuData.lunch.map(item => `
                 <div class="smart-highlight bg-[#1a1d23] rounded-2xl p-5 border-l-4 ${item.veg ? 'border-green-500' : 'border-red-500'}">
                     <div class="flex justify-between">
@@ -440,6 +426,7 @@
             `).join('');
             document.getElementById('lunch-container').innerHTML = lunchHTML;
 
+            // Drinks List (Grouped by Hot/Cold)
             const drinksHTML = menuData.drinks.map(item => `
                 <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
                     <div>
@@ -454,8 +441,11 @@
             `).join('');
             document.getElementById('drinks-container').innerHTML = drinksHTML;
 
-            ['brunch', 'snacks', 'dinner', 'desserts'].forEach(id => {
-                document.getElementById(`${id}-container`).innerHTML = menuData[id].map(item => `
+            // Similar logic for others (simplified for demo)
+            const otherIds = ['brunch', 'snacks', 'dinner', 'desserts'];
+            otherIds.forEach(id => {
+                const container = document.getElementById(`${id}-container`);
+                container.innerHTML = menuData[id].map(item => `
                     <div class="smart-highlight bg-[#1a1d23] rounded-2xl p-4">
                         <div class="flex justify-between">
                             <h3 class="font-bold text-sm">${item.name}</h3>
@@ -468,7 +458,7 @@
         }
 
         function requestAssistance() {
-            showAlert("Waiter notified! Someone will be with you shortly.");
+            showAlert("🔔 Waiter notified! Someone will be with you shortly.");
         }
 
         function showAlert(msg) {
@@ -478,87 +468,11 @@
             setTimeout(() => { alertBox.style.top = '-100px'; }, 3000);
         }
 
-        // Share functionality
-        async function shareMenu() {
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Indian Kitchen – Authentic Tamil Menu',
-                        text: SHARE_TEXT,
-                        url: SHARE_URL
-                    });
-                    return;
-                } catch (err) {
-                    if (err.name === 'AbortError') return;
-                }
-            }
-            openShareModal();
-        }
-
-        function openShareModal() {
-            document.getElementById('share-url-display').textContent = SHARE_URL;
-            const modal = document.getElementById('share-modal');
-            modal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeShareModal() {
-            document.getElementById('share-modal').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function shareVia(platform) {
-            const encodedURL = encodeURIComponent(SHARE_URL);
-            const encodedText = encodeURIComponent(SHARE_TEXT);
-            const urls = {
-                whatsapp: `https://wa.me/?text=${encodedText}%20${encodedURL}`,
-                telegram: `https://t.me/share/url?url=${encodedURL}&text=${encodedText}`,
-                email: `mailto:?subject=${encodeURIComponent('Indian Kitchen – Tamil Menu')}&body=${encodedText}%20${encodedURL}`,
-                twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedURL}`,
-                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedURL}`
-            };
-            if (urls[platform]) {
-                window.open(urls[platform], '_blank', 'noopener,noreferrer');
-            }
-        }
-
-        async function copyLink() {
-            try {
-                await navigator.clipboard.writeText(SHARE_URL);
-            } catch {
-                const ta = document.createElement('textarea');
-                ta.value = SHARE_URL;
-                ta.style.cssText = 'position:fixed;opacity:0';
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-            }
-            const icon = document.getElementById('copy-icon');
-            const label = document.getElementById('copy-label');
-            const wrap = document.getElementById('copy-icon-wrap');
-            icon.className = 'fas fa-check';
-            label.textContent = 'Copied!';
-            wrap.style.background = '#1a3300';
-            wrap.style.color = '#4caf50';
-            showAlert('Link copied to clipboard!');
-            setTimeout(() => {
-                icon.className = 'fas fa-link';
-                label.textContent = 'Copy Link';
-                wrap.style.background = '#1a1500';
-                wrap.style.color = '#ff9f1c';
-            }, 2000);
-        }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && document.getElementById('share-modal').classList.contains('open')) {
-                closeShareModal();
-            }
-        });
+        window.onload = generateMenu;
 
         window.addEventListener('scroll', () => {
             const sections = ['tiffin', 'brunch', 'lunch', 'snacks', 'dinner', 'desserts', 'drinks'];
-            let current = '';
+            let current = "";
             sections.forEach(id => {
                 const el = document.getElementById(id);
                 if (el && window.scrollY >= el.offsetTop - 180) current = id;
@@ -569,7 +483,115 @@
             });
         });
 
-        window.addEventListener('load', generateMenu);
+        // ====== SHARE FEATURE ======
+        const SHARE_URL = window.location.href;
+        const SHARE_TEXT = "Check out Indian Kitchen's authentic Tamil menu!";
+
+        function openShareModal() {
+            const modal = document.getElementById('share-modal');
+            const urlDisplay = document.getElementById('share-url-display');
+            urlDisplay.textContent = SHARE_URL;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('share-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        async function shareMenu() {
+            // Prefer native Web Share API (especially on mobile)
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: "Indian Kitchen – Authentic Tamil Menu",
+                        text: SHARE_TEXT,
+                        url: SHARE_URL
+                    });
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') {
+                        // User cancelled share; do nothing
+                        return;
+                    }
+                    // If some other error, fall back to custom modal
+                }
+            }
+            // Fallback: custom share modal
+            openShareModal();
+        }
+
+        function shareVia(platform) {
+            const encodedURL = encodeURIComponent(SHARE_URL);
+            const encodedText = encodeURIComponent(SHARE_TEXT);
+            const urls = {
+                whatsapp: `https://wa.me/?text=${encodedText}%20${encodedURL}`,
+                telegram: `https://t.me/share/url?url=${encodedURL}&text=${encodedText}`,
+                email: `mailto:?subject=${encodeURIComponent("Indian Kitchen – Tamil Menu")}&body=${encodedText}%20${encodedURL}`,
+                twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedURL}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedURL}`
+            };
+            const target = urls[platform];
+            if (target) {
+                window.open(target, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        async function copyLink() {
+            try {
+                await navigator.clipboard.writeText(SHARE_URL);
+            } catch (err) {
+                // Fallback for older browsers
+                const ta = document.createElement('textarea');
+                ta.value = SHARE_URL;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                } catch (e) {
+                    console.error('Copy failed', e);
+                }
+                document.body.removeChild(ta);
+            }
+
+            // Small visual feedback in modal button
+            const icon = document.getElementById('copy-icon');
+            const label = document.getElementById('copy-label');
+            const wrap = document.getElementById('copy-icon-wrap');
+
+            if (icon && label && wrap) {
+                icon.className = 'fas fa-check';
+                label.textContent = 'Copied!';
+                wrap.style.background = '#1a3300';
+                wrap.style.color = '#4caf50';
+
+                setTimeout(() => {
+                    icon.className = 'fas fa-link';
+                    label.textContent = 'Copy Link';
+                    wrap.style.background = '#1a1500';
+                    wrap.style.color = '#ff9f1c';
+                }, 2000);
+            }
+
+            // Global alert using existing system
+            showAlert('Link copied to clipboard!');
+        }
+
+        // Close modal on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('share-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeShareModal();
+                }
+            }
+        });
     </script>
 </body>
 </html>
