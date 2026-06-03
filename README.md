@@ -104,7 +104,7 @@ QR-driven-menu-display/
 > 
 | Desktop & Category View | Mobile UI/UX Engine Mockup |
 | --- | --- |
-| *[Place high-res application screenshot detailing dark-theme grid view here]* | *[Place continuous scrolling mobile layout graphic template here]* |
+| *[![Project Screenshot](images/Project_picture.png)* | *[[Watch Demo](media/Indian kitchen web in mobile view.mp4)* |
 
 ---
 
